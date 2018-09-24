@@ -131,11 +131,13 @@ public class App {
     }
 
     public static File getKeyFile() throws Exception {
+        File file = File.createTempFile("kserver", ".keystore");
+        file.createNewFile();
+        System.out.println("bbbb----"+file.getPath());
         System.out.println("aaaa----"+App.class.getResource("/kserver.keystore").toString());
 
         InputStream ins = App.class.getResourceAsStream("/kserver.keystore");
-        File file = File.createTempFile("kserver", "keystore");
-        file.createNewFile();
+
         OutputStream os = new FileOutputStream(file);
         int bytesRead = 0;
         byte[] buffer = new byte[8192];
