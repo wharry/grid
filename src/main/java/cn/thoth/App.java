@@ -133,8 +133,7 @@ public class App {
     public static File getKeyFile() throws Exception {
 
 
-        InputStream ins = new App().getClass().getClassLoader().getResource("kserver.keystore").toURI().toURL()
-                .openStream();
+        InputStream ins = App.class.getResourceAsStream("/kserver.keystore");
         File file = File.createTempFile("kserver", "keystore");
         file.createNewFile();
         OutputStream os = new FileOutputStream(file);
