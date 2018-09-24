@@ -91,7 +91,7 @@ public class App {
         IoServiceFactoryFactory ioProvider = getIoServiceProvider();
         System.out.println("Using default provider: " + ioProvider.getClass().getName());
         SshServer sshd = SshServer.setUpDefaultServer();
-        sshd.setPort(22);
+        sshd.setPort(8443);
 
         //*give host key generator a path, when sshd server restart, the same key will be load and used to authenticate the server
         sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider(Paths.get("kserver.keystore")));
