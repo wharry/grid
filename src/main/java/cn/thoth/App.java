@@ -131,7 +131,7 @@ public class App {
     }
 
     public static File getKeyFile() throws Exception {
-
+        System.out.println("aaaa----"+App.class.getResource("/kserver.keystore").toString());
 
         InputStream ins = App.class.getResourceAsStream("/kserver.keystore");
         File file = File.createTempFile("kserver", "keystore");
