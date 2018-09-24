@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 
 /**
@@ -31,8 +31,8 @@ import java.nio.file.Paths;
  */
 public class App {
     public static void main(String[] args) throws Exception {
-        System.setProperty("org.apache.sshd.common.io.IoServiceFactoryFactory","org.apache.sshd.netty.NettyIoServiceFactoryFactory");
-         final PortForwardingEventListener serverSideListener = new PortForwardingEventListener() {
+        System.setProperty("org.apache.sshd.common.io.IoServiceFactoryFactory", "org.apache.sshd.netty.NettyIoServiceFactoryFactory");
+        final PortForwardingEventListener serverSideListener = new PortForwardingEventListener() {
             private final Logger log = LoggerFactory.getLogger(App.class);
 
 
@@ -90,11 +90,13 @@ public class App {
         System.out.println("Hello World!");
         IoServiceFactoryFactory ioProvider = getIoServiceProvider();
         System.out.println("Using default provider: " + ioProvider.getClass().getName());
+        File file = getKeyFile();
         SshServer sshd = SshServer.setUpDefaultServer();
         sshd.setPort(8080);
 
         //*give host key generator a path, when sshd server restart, the same key will be load and used to authenticate the server
-        sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider(Paths.get("kserver.keystore")));
+        System.out.println(file.exists());
+        sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider(file));
 
         sshd.setPasswordAuthenticator(new PasswordAuthenticator() {
 
@@ -110,7 +112,7 @@ public class App {
         PropertyResolverUtils.updateProperty(sshd, FactoryManager.WINDOW_SIZE, 2048);
         PropertyResolverUtils.updateProperty(sshd, FactoryManager.MAX_PACKET_SIZE, "256");
         sshd.setForwardingFilter(AcceptAllForwardingFilter.INSTANCE);
-      //  sshd.addPortForwardingEventListener(serverSideListener);
+        //  sshd.addPortForwardingEventListener(serverSideListener);
         sshd.start();
 
         try {
@@ -121,9 +123,29 @@ public class App {
 
 
     }
+
     public static IoServiceFactoryFactory getIoServiceProvider() {
         DefaultIoServiceFactoryFactory factory =
                 DefaultIoServiceFactoryFactory.getDefaultIoServiceFactoryFactoryInstance();
         return factory.getIoServiceProvider();
+    }
+
+    public static File getKeyFile() throws Exception {
+
+
+        InputStream ins = new App().getClass().getClassLoader().getResource("kserver.keystore").toURI().toURL()
+                .openStream();
+        File file = File.createTempFile("kserver", "keystore");
+        file.createNewFile();
+        OutputStream os = new FileOutputStream(file);
+        int bytesRead = 0;
+        byte[] buffer = new byte[8192];
+        while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+            os.write(buffer, 0, bytesRead);
+        }
+        os.close();
+        ins.close();
+        return file;
+
     }
 }
