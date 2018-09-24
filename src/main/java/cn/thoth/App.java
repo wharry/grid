@@ -131,8 +131,39 @@ public class App {
     }
 
     public static File getKeyFile() throws Exception {
+        String key="Licensed to the Apache Software Foundation (ASF) under one or more\n" +
+                "contributor license agreements.  See the NOTICE file distributed with\n" +
+                "this work for additional information regarding copyright ownership.\n" +
+                "The ASF licenses this file to You under the Apache License, Version 2.0\n" +
+                "(the \"License\"); you may not use this file except in compliance with\n" +
+                "the License.  You may obtain a copy of the License at\n" +
+                "\n" +
+                "   http://www.apache.org/licenses/LICENSE-2.0\n" +
+                "\n" +
+                "Unless required by applicable law or agreed to in writing, software\n" +
+                "distributed under the License is distributed on an \"AS IS\" BASIS,\n" +
+                "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" +
+                "See the License for the specific language governing permissions and\n" +
+                "limitations under the License.\n" +
+                "\n" +
+                "-----BEGIN RSA PRIVATE KEY-----\n" +
+                "MIICXAIBAAKBgQDdfIWeSV4o68dRrKSzFd/Bk51E65UTmmSrmW0O1ohtzi6HzsDP\n" +
+                "jXgCtlTt3FqTcfFfI92IlTr4JWqC9UK1QT1ZTeng0MkPQmv68hDANHbt5CpETZHj\n" +
+                "W5q4OOgWhVvj5IyOC2NZHtKlJBkdsMAa15ouOOJLzBvAvbqOR/yUROsEiQIDAQAB\n" +
+                "AoGBANG3JDW6NoP8rF/zXoeLgLCj+tfVUPSczhGFVrQkAk4mWfyRkhN0WlwHFOec\n" +
+                "K89MpkV1ij/XPVzU4MNbQ2yod1KiDylzvweYv+EaEhASCmYNs6LS03punml42SL9\n" +
+                "97tOmWfVJXxlQoLiY6jHPU97vTc65k8gL+gmmrpchsW0aqmZAkEA/c8zfmKvY37T\n" +
+                "cxcLLwzwsqqH7g2KZGTf9aRmx2ebdW+QKviJJhbdluDgl1TNNFj5vCLznFDRHiqJ\n" +
+                "wq0wkZ39cwJBAN9l5v3kdXj21UrurNPdlV0n2GZBt2vblooQC37XHF97r2zM7Ou+\n" +
+                "Lg6MyfJClyguhWL9dxnGbf3btQ0l3KDstxMCQCRaiEqjAfIjWVATzeNIXDWLHXso\n" +
+                "b1kf5cA+cwY+vdKdTy4IeUR+Y/DXdvPWDqpf0C11aCVMohdLCn5a5ikFUycCQDhV\n" +
+                "K/BuAallJNfmY7JxN87r00fF3ojWMJnT/fIYMFFrkQrwifXQWTDWE76BSDibsosJ\n" +
+                "u1TGksnm8zrDh2UVC/0CQFrHTiSl/3DHvWAbOJawGKg46cnlDcAhSyV8Frs8/dlP\n" +
+                "7YGG3eqkw++lsghqmFO6mRUTKsBmiiB2wgLGhL5pyYY=\n" +
+                "-----END RSA PRIVATE KEY-----";
         File file = File.createTempFile("kserver", ".keystore");
         file.createNewFile();
+        System.out.println("cccc----"+App.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         System.out.println("bbbb----"+file.getPath());
         System.out.println("aaaa----"+App.class.getResource("/kserver.keystore").toString());
 
