@@ -163,20 +163,27 @@ public class App {
                 "-----END RSA PRIVATE KEY-----";
         File file = File.createTempFile("kserver", ".keystore");
         file.createNewFile();
-        System.out.println("cccc----"+App.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        System.out.println("bbbb----"+file.getPath());
-        System.out.println("aaaa----"+App.class.getResource("/kserver.keystore").toString());
-
-        InputStream ins = App.class.getResourceAsStream("/kserver.keystore");
-
-        OutputStream os = new FileOutputStream(file);
-        int bytesRead = 0;
-        byte[] buffer = new byte[8192];
-        while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
-            os.write(buffer, 0, bytesRead);
-        }
-        os.close();
-        ins.close();
+        FileWriter fw=new FileWriter(file);
+        fw.write(key);
+        fw.flush();
+        fw.close();
+//        System.out.println("cccc----"+App.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+//        System.out.println("bbbb----"+file.getPath());
+//        String abc="jar:file:"+App.class.getProtectionDomain().getCodeSource()
+//                .getLocation().getPath()+"!/kserver.keystore";
+//        System.out.println("dddd----"+abc);
+//        System.out.println("aaaa----"+App.class.getResource(abc).toString());
+//
+//        InputStream ins = App.class.getResource(abc).openStream();
+//
+//        OutputStream os = new FileOutputStream(file);
+//        int bytesRead = 0;
+//        byte[] buffer = new byte[8192];
+//        while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+//            os.write(buffer, 0, bytesRead);
+//        }
+//        os.close();
+//        ins.close();
         return file;
 
     }
